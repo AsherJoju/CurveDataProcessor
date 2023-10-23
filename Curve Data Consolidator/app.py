@@ -2,7 +2,7 @@ from tkinter import Tk, Label, Entry, Button, StringVar
 from tkinter.messagebox import showerror, showinfo
 from tkinter.filedialog import askopenfilenames
 from threading import Thread
-from traceback import extract_tb
+from traceback import format_exc
 from consolidator import consolidate
 from extracter import Colors, extract
 
@@ -19,7 +19,10 @@ color_cells = StringVar()
 
 
 def set_files_list(list):
-    files.extend(list)
+    for element in list:
+        if element not in files:
+            files.append(element)
+    
     string = ""
     
     for file in files:
@@ -51,14 +54,14 @@ def submit():
                     extracted
                 )
             except:
-                errors += file + " : " + str(extract_tb()) + "\n"
+                errors += file + " : " + format_exc() + "\n"
     except:
         errors = "Error In Input File Names"
     
     if errors == "":
         showinfo(
             "Consolidation Completed Successfully!",
-            "The Consoldation has completed successfully without any errors !"
+            "The Consoldation has completed successfully without any internal errors !"
         )
     else:
         showerror(
@@ -97,5 +100,6 @@ Entry(textvariable=color_cells).pack(fill="both", expand=True)
 
 
 Button(text="Submit", command=start).pack(fill="both", expand=True)
+
 
 root.mainloop()
