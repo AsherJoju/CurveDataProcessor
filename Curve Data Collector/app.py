@@ -18,7 +18,7 @@ def submit():
         collect(directory.get(), sheet.get())
         showinfo(
             title="Collection Complete!",
-            message="Collection is complete without any errors"
+            message="Collection is complete without any internal errors"
         )
     except Exception as e:
         showerror(
